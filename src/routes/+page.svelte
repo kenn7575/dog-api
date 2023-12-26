@@ -114,7 +114,7 @@
 		</Popover.Trigger>
 		<Popover.Content class="mt-4 w-[200px] p-0">
 			<Command.Root>
-				<Command.Input placeholder="Search framework..." />
+				<Command.Input placeholder="Search breed..." />
 				<Command.Empty>No framework found.</Command.Empty>
 				<Command.Group class="max-h-64 overflow-auto">
 					{#each data.breeds as breed}
@@ -152,7 +152,7 @@
 			</Popover.Trigger>
 			<Popover.Content class="mt-4 w-[200px] p-0">
 				<Command.Root>
-					<Command.Input placeholder="Search framework..." />
+					<Command.Input placeholder="Search Subbreed..." />
 					<Command.Empty>No framework found.</Command.Empty>
 					<Command.Group class="max-h-64 overflow-auto">
 						{#each data.breeds.find((f) => f.breed === valueBreed)?.subBreeds as subBreed}
