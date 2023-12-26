@@ -123,6 +123,7 @@
 							onSelect={(currentValue) => {
 								valueBreed = currentValue;
 								closeAndFocusTriggerBreed(ids.trigger);
+								pegination = 0;
 								handleBreedSelect(breed.breed);
 							}}
 						>
@@ -161,6 +162,7 @@
 								onSelect={(currentValue) => {
 									valueSubBreed = currentValue;
 									closeAndFocusTriggerSubBreed(ids.trigger);
+									pegination = 0;
 									handleSubBreedSelect(valueBreed); // Use valueBreed instead of subBreed
 								}}
 							>
