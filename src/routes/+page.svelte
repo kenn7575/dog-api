@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Input } from '$lib/components/ui/input';
-	import * as Card from '$lib/components/ui/card';
+	import { Loader2 } from 'lucide-svelte';
 	import type { PageData } from './$types';
 
 	import { ChevronLeft, ChevronRight } from 'lucide-svelte';
@@ -13,6 +12,7 @@
 	import { cn } from '$lib/utils';
 	import { tick } from 'svelte';
 	import * as Alert from '$lib/components/ui/alert';
+	import { load } from './+page';
 
 	//
 	let openBreed = false;
@@ -73,18 +73,21 @@
 			images = allImages.slice(pegination, pegination + peginationSize);
 		}
 	}
-
+	let loading = false;
 	//error handling
 	async function handleBreedSelect(breed: string) {
 		imageErrorCounter = 0;
 		selectedValueSubBreed = 'Select a sub breed...';
 		valueSubBreed = '';
+		loading = true;
 		allImages = await fetchDogBreedImages(breed);
+		loading = false;
 	}
 	async function handleSubBreedSelect(breed: string) {
 		imageErrorCounter = 0;
-
+		loading = true;
 		allImages = await fetchDogSubBreedImages(breed, valueSubBreed);
+		loading = false;
 	}
 
 	let imageErrorCounter = 0;
@@ -103,7 +106,7 @@
 				variant="outline"
 				role="combobox"
 				aria-expanded={openBreed}
-				class="w-[200px] justify-between"
+				class="w-[300px] justify-between"
 			>
 				{selectedValueBreed}
 				<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -141,7 +144,7 @@
 					variant="outline"
 					role="combobox"
 					aria-expanded={openSubBreed}
-					class="w-[200px] justify-between"
+					class="w-[300px] justify-between"
 				>
 					{selectedValueSubBreed}
 					<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -182,7 +185,7 @@
 		</Alert.Root>
 	{/if}
 
-	{#if images.length > 0}
+	{#if images.length > 0 && !loading}
 		<ul class="image-gallery container">
 			{#key allImages}
 				{#each images as image, i}
@@ -209,6 +212,8 @@
 			</p>
 			<Button on:click={next} variant="outline" size="icon"><ChevronRight /></Button>
 		</div>
+	{:else if loading}
+		<Loader2 class="h-16 w-16 animate-spin text-primary" />
 	{/if}
 </main>
 
